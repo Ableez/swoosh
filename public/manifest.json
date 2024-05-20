@@ -1,0 +1,98 @@
+{
+  "name": "Morse",
+  "id": "/",
+  "short_name": "Morse App",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "A STEM skills learning app",
+  "lang": "en-US",
+  "dir": "auto",
+  "theme_color": "#fff",
+  "background_color": "#fff",
+  "orientation": "portrait",
+  "protocol_handlers": [
+    {
+      "protocol": "web+music",
+      "url": "/play?track=%s"
+    }
+  ],
+  "categories": ["learning", "mathmatics", "school", "e-learning"],
+  "icons": [
+    {
+      "src": "/icons/maskable_icon_x48.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/icons/maskable_icon_x72.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/icons/maskable_icon_x96.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/icons/maskable_icon_x128.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/icons/maskable_icon_x192.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/maskable_icon_x256.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/icons/maskable_icon_x192.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/maskable_icon_x384.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/icons/maskable_icon_x512.png",
+      "type": "image/png",
+      "purpose": "maskable any",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
+      "purpose": "any",
+      "sizes": "2880x1800",
+      "type": "image/png",
+      "description": "A screenshot of the home page"
+    }
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Explore",
+      "url": "/courses",
+      "description": "View from our 100+ list of STEM base courses"
+    },
+    {
+      "name": "AI Tutor",
+      "url": "/claude",
+      "description": "Interact with an intelligent bot."
+    }
+  ]
+}
