@@ -14,7 +14,7 @@ const MainLayout = ({ children }: Props) => {
   //   }
   // }, []);
   return (
-    <div>
+    <div className="mx-auto max-w-screen-md">
       {children}
       <div className="h-24"></div>
       <BottomBar />

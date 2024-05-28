@@ -8,12 +8,18 @@ await import("./src/env.js");
 const config = {
   images: {
     remotePatterns: [
-      // {
-      //   protocol: "https",
-      //   hostname: "i.pinimg.com",
-      //   port: "",
-      //   pathname: "/**",
-      // },
+      {
+        protocol: "https",
+        hostname: "www.moo.com",
+        port: "",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "**",
+      },
     ],
   },
 };

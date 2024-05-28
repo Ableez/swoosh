@@ -1,9 +1,8 @@
-import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
-import { customPrints } from "@/lib/data/customCategories";
-import Link from "next/link";
+import { printCategories } from "@/lib/data/customCategories";
+import GridDisplayComponent from "./grid-display-component";
 
 const PrintCategory = () => {
   return (
@@ -15,32 +14,7 @@ const PrintCategory = () => {
           <Search width={14} />
         </Button>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        {customPrints.map((print, idx) => {
-          return (
-            <Link key={idx} href={`/print/${print.slug}`}>
-              <div className="masonry-grid-item duration-300 animate-in">
-                <div
-                  className={`bg-${print.color}-200 group mb-2 grid place-items-center overflow-clip rounded-2xl bg-gray-200 object-cover`}
-                >
-                  <Image
-                    src={print.coverImage}
-                    alt={print.title}
-                    className="scale-100 duration-300 group-hover:scale-110"
-                    width={300}
-                    height={300}
-                  />
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium animate-in">
-                    {print.title}
-                  </h4>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+      <GridDisplayComponent data={printCategories} />
     </div>
   );
 };

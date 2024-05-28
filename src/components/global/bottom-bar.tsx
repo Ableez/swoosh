@@ -41,7 +41,7 @@ const BottomBar = () => {
   const pathName = usePathname();
 
   return (
-    <div className="fixed bottom-0 grid w-full grid-cols-4 place-items-center border-t bg-white py-2">
+    <div className="fixed bottom-0 grid w-full grid-cols-4 place-items-center border-t bg-white py-2 md:hidden">
       {navBtns.map(({ icon, iconFilled, title, link }) => {
         return (
           <NavbarBtn
