@@ -16,22 +16,15 @@ import {
   stickerSchema,
 } from "@/lib/data/productsSchema";
 import {
-  CheckCircle2,
-  ChevronsUpDown,
   Heart,
-  ImageIcon,
   MessageCircleIcon,
-  Minus,
-  MoveHorizontal,
-  MoveVertical,
-  Plus,
   StarIcon,
   ThumbsDown,
-  X,
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { ProductInfoTittle } from "./_components/product-info-title";
+import StickerProductInfo from "./_components/sticker-info";
 
 type Props = { params: { product: string } };
 

@@ -52,7 +52,7 @@ type SpecialFinishOption = "Gold Foil" | "Raised Spot Gloss" | "Silver Foil";
 
 type FinishingOption = "Matte" | "Glossy";
 
-type SizeOption = {
+export type SizeOption = {
   name: string;
   image?: string;
   value: string;
@@ -79,7 +79,7 @@ type DesignOptionType = {
   image: string;
 };
 
-type StickerType = [{ name: string; image: string }];
+export type StickerType = { name: string; image: string };
 
 type Flyer = {
   productInfo: ProductInfo;
