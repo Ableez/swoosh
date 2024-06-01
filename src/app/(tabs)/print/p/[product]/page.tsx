@@ -15,12 +15,7 @@ import {
   type Sticker,
   stickerSchema,
 } from "@/lib/data/productsSchema";
-import {
-  Heart,
-  MessageCircleIcon,
-  StarIcon,
-  ThumbsDown,
-} from "lucide-react";
+import { Heart, MessageCircleIcon, StarIcon, ThumbsDown } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { ProductInfoTittle } from "./_components/product-info-title";
@@ -29,7 +24,13 @@ import StickerProductInfo from "./_components/sticker-info";
 type Props = { params: { product: string } };
 
 const Product = ({ params }: Props) => {
-  const product = params.product === "sticker" ? stickerSchema : products[0];
+  const product = products.find(
+    (product) => product.productInfo.id === params.product,
+  );
+
+  if (!product) {
+    return "404: Product not found"
+  }
 
   return (
     <div className="max-w-screen-sm">
@@ -37,12 +38,25 @@ const Product = ({ params }: Props) => {
       <div>
         <ProductImagesCarousel images={product?.productInfo.images} />
         <ProductInfoTittle
-          productName={product?.productInfo.name}
-          quantityOptions={product?.quantityOptions}
+          productName={product.productInfo.name}
+          quantityOptions={product.quantityOptions}
         />
 
         {params.product === "sticker" && (
-          <StickerProductInfo sticker={product as unknown as Sticker} />
+          <StickerProductInfo
+            designOptions={[
+              {
+                value: "SAV",
+                image: "/productImages/stickercover1.jpg",
+              },
+              {
+                value: "Clear stiicker",
+                image: "/productImages/clearsticker.webp",
+              },
+            ]}
+            sizeOptions={product.sizeOptions}
+            stickerTypes={product.stickerTypes}
+          />
         )}
 
         {/* product desc here */}

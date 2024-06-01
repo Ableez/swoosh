@@ -18,33 +18,28 @@ const StickerProductInfo = ({
   sizeOptions,
   designOptions,
 }: StickerProductInfoProps) => {
-  const [currStickerType, setCurrStickerType] = useState<
-    StickerType | undefined
-  >(stickerTypes[0]);
-  const [currStickerSizeOption, setCurrStickerSizeOption] = useState<
-    SizeOption | undefined
-  >(sizeOptions[0]);
+  const [currStickerType, setCurrStickerType] = useState<StickerType>();
+  const [currStickerSizeOption, setCurrStickerSizeOption] =
+    useState<SizeOption>();
   const [customSizeDim, setCustomSizeDim] = useState<{
     width: number;
     height: number;
-  }>({ width: 5, height: 5 });
+  }>({ width: 3, height: 3 });
   const [customSizeDialogOpen, setCustomSizeDialogOpen] =
     useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(1);
-  const [designOption, setDesignOption] = useState<string | undefined>(
-    designOptions[0]?.value,
-  );
+  const [quantity, setQuantity] = useState<number>(100);
+  const [designOption, setDesignOption] = useState<string>();
 
   return (
     <div className="grid">
       <StickerTypeSelector
         stickerTypes={stickerTypes}
-        currStickerType={currStickerType as StickerType}
+        currStickerType={currStickerType!}
         setCurrStickerType={setCurrStickerType}
       />
       <StickerSizeSelector
         sizeOptions={sizeOptions}
-        currStickerSizeOption={currStickerSizeOption as StickerType}
+        currStickerSizeOption={currStickerSizeOption!}
         setCurrStickerSizeOption={setCurrStickerSizeOption}
         openCustomSizeDialog={() => setCustomSizeDialogOpen(true)}
       />
@@ -58,7 +53,7 @@ const StickerProductInfo = ({
       <StickerQuantitySelector quantity={quantity} setQuantity={setQuantity} />
       <DesignOptionSelector
         designOptions={designOptions}
-        designOption={designOption as string}
+        designOption={designOption!}
         setDesignOption={setDesignOption}
       />
       <div className="grid w-full place-items-center gap-2 p-4 px-4 text-lg font-semibold">
