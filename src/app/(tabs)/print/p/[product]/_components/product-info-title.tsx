@@ -1,28 +1,28 @@
 import { Button } from "@/components/ui/button";
+import { type Product } from "@/lib/types/products";
 import { Heart, Share } from "lucide-react";
 
 type productInfoTittleProps = {
-  productName?: string;
-  quantityOptions?: {
-    pricePerUnit: number;
-    quantity: number;
-    packPrice: number;
-  }[];
+  product: Product;
 };
 
-export const ProductInfoTittle = ({
-  productName,
-  quantityOptions,
-}: productInfoTittleProps) => {
+export const ProductInfoTittle = ({ product }: productInfoTittleProps) => {
   return (
     <div className="flex place-items-center justify-between p-4 align-middle">
       <div className="font-medium">
-        <h4 className="text-lg font-bold">{productName ?? "Product Name"}</h4>
+        <h4 className="text-base font-bold">
+          {product.productInfo.name ?? "Product Name"}
+        </h4>
         <div className="flex place-items-center justify-start gap-2 align-middle">
           <h4 className="flex place-items-center gap-1 align-middle">
-            <span className="text-xs font-normal text-neutral-600">From </span>
-            <span className="text-base font-bold text-black dark:text-white">
-              ${quantityOptions?.[0]?.packPrice}
+            <span className="text-base font-semibold text-black dark:text-white">
+              ₦
+              {product.attribute.priceRange.low.price
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </span>
+            <span className="text-sm font-normal text-neutral-600">
+              for {product.attribute.priceRange.low.qty}
             </span>
           </h4>
         </div>
@@ -38,4 +38,3 @@ export const ProductInfoTittle = ({
     </div>
   );
 };
-

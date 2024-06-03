@@ -23,23 +23,19 @@ export const PRINT_SIDES_OPTIONS = {
 export const METRICS = {
   INCH: { name: "INCH", w: 0, h: 0 },
   CM: { name: "CM", w: 0, h: 0 },
+  FT: { name: "FT", w: 0, h: 0 },
   MM: { name: "MM", w: 0, h: 0 },
-} as const;
-
-export const PAPER_SIZE_FORMATS = {
-  A7: { name: "A7", w: 0, h: 0 },
-  A6: { name: "A6", w: 0, h: 0 },
-  A5: { name: "A5", w: 0, h: 0 },
-  A4: { name: "A4", w: 0, h: 0 },
-  A3: { name: "A3", w: 0, h: 0 },
-  A2: { name: "A2", w: 0, h: 0 },
-  A1: { name: "A1", w: 0, h: 0 },
-  A0: { name: "A0", w: 0, h: 0 },
 } as const;
 
 export const EDGE_OPTIONS = {
   ROUNDED: "Rounded",
   STRAIGHT: "Straight",
+} as const;
+
+export const CARD_THICKNESS_VALUES = {
+  LIGHT: { value: 200, metric: "GSM" },
+  THICK: { value: 250, metric: "GSM" },
+  SUPERTHICK: { value: 350, metric: "GSM" },
 } as const;
 
 // Types
@@ -78,19 +74,23 @@ export type Rating = {
 
 export type ProductAttribute =
   | FlyerAttributes
-  | StickerAttributes
-  | LabelAndTagAttributes
-  | BusinessCardAttributes
   | CourierPackageAttributes
+  | PlasticBagAttributes
   | PictureFrameAttributes
   | BannerAttributes
   | PaperBagAttributes
-  | PlasticBagAttributes;
+  | StickerAttributes
+  | BusinessCardAttributes
+  | LabelAndTagAttributes;
 
 export type FlyerAttributes = {
   type: string;
   printSidesOption: typeof PRINT_SIDES_OPTIONS;
-  sizes: MetricBasedSizeOption[];
+  sizes: PaperBasedSizeOption;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     oneSided: PricingOption;
     twoSided: PricingOption;
@@ -99,9 +99,13 @@ export type FlyerAttributes = {
 
 export type StickerAttributes = {
   type: string;
-  sizes: MetricBasedSizeOption[];
+  sizes: MetricBasedSizeOption;
   printAndCut: boolean;
   stickerTypes: StickerType[];
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     vinyl: {
       designPrice: DesignPrice;
@@ -120,18 +124,16 @@ export type StickerAttributes = {
   };
 };
 
-export const CARD_THICKNESS_VALUES = {
-  LIGHT: { value: 200, metric: "GSM" },
-  THICK: { value: 250, metric: "GSM" },
-  SUPERTHICK: { value: 350, metric: "GSM" },
-} as const;
-
 export type LabelAndTagAttributes = {
   type: string;
   printColorOption: typeof PRINT_COLOR_OPTIONS;
   cardThickness: typeof CARD_THICKNESS_VALUES;
   printSidesOption: typeof PRINT_SIDES_OPTIONS;
-  sizes: PaperBasedSizeOption[];
+  sizes: MetricBasedSizeOption;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     [key in keyof typeof PRINT_SIDES_OPTIONS]: {
       [key in keyof typeof CARD_THICKNESS_VALUES]: {
@@ -151,7 +153,11 @@ export type BusinessCardAttributes = {
   printSidesOption: typeof PRINT_SIDES_OPTIONS;
   specialFinishOption: typeof SPECIAL_FINISH_OPTIONS;
   edgeOption: typeof EDGE_OPTIONS;
-  sizes: MetricBasedSizeOption[];
+  sizes: MetricBasedSizeOption;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     [key in keyof typeof PRINT_SIDES_OPTIONS]: {
       designPrice: DesignPrice;
@@ -164,17 +170,13 @@ export type BusinessCardAttributes = {
 
 export type CourierPackageAttributes = {
   type: string;
-  sizes: [
-    {
-      [key in keyof typeof PAPER_SIZE_FORMATS]: {
-        name: string;
-        image: string;
-        value: typeof METRICS;
-      };
-    },
-  ];
+  sizes: PaperBasedSizeOption;
   printSidesOption: typeof PRINT_SIDES_OPTIONS;
   printColorOption: typeof PRINT_COLOR_OPTIONS;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     [key in keyof typeof PRINT_SIDES_OPTIONS]: {
       [key in keyof typeof PRINT_COLOR_OPTIONS]: {
@@ -189,9 +191,13 @@ export type CourierPackageAttributes = {
 
 export type PaperBagAttributes = {
   type: string;
-  sizes: PaperBasedSizeOption[];
+  sizes: PaperBasedSizeOption;
   printSidesOption: typeof PRINT_SIDES_OPTIONS;
   printColorOption: typeof PRINT_COLOR_OPTIONS;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     [key in keyof typeof PRINT_SIDES_OPTIONS]: {
       [key in (typeof AvailablePlasticBagANDPictureFrameSizes)[number]]: {
@@ -209,23 +215,17 @@ const AvailablePlasticBagANDPictureFrameSizes = [
   "A4",
   "A3",
   "A2",
-  "A1",
-  "A0",
 ] as const;
 
 export type PlasticBagAttributes = {
   type: string;
-  sizes: [
-    {
-      [key in keyof typeof PAPER_SIZE_FORMATS]: {
-        name: string;
-        image: string;
-        value: typeof METRICS;
-      };
-    },
-  ];
+  sizes: PaperBasedSizeOption;
   printSidesOption: typeof PRINT_SIDES_OPTIONS;
   printColorOption: typeof PRINT_COLOR_OPTIONS;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     [key in keyof typeof PRINT_SIDES_OPTIONS]: [
       {
@@ -242,7 +242,11 @@ export type PlasticBagAttributes = {
 
 export type PictureFrameAttributes = {
   type: string;
-  sizes: PaperBasedSizeOption[];
+  sizes: PaperBasedSizeOption;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     [key in (typeof AvailablePlasticBagANDPictureFrameSizes)[number]]: {
       designPrice: DesignPrice;
@@ -255,7 +259,11 @@ export type PictureFrameAttributes = {
 
 export type BannerAttributes = {
   type: string;
-  sizes: MetricBasedSizeOption[];
+  sizes: MetricBasedSizeOption;
+  priceRange: {
+    low: { price: number; qty: number };
+    high: { price: number; qty: number };
+  };
   pricing: {
     designPrice: DesignPrice;
     sizePriceBias: number;
@@ -263,16 +271,6 @@ export type BannerAttributes = {
     maxQty: number;
   };
 };
-
-// type SizeOption = {
-//   name: string;
-//   image: string;
-//   value: {
-//     INCH: { metric: typeof METRICS; w: 4.1; h: 5.8 };
-//     CM: { metric: typeof METRICS; w: 10.5; h: 14.8 };
-//     MM: { metric: typeof METRICS; w: 105; h: 148 };
-//   };
-// };
 
 export type StickerType = {
   name: string;
@@ -303,11 +301,11 @@ export type BoxSize = {
 export type PackageTypes = {
   COURIER: {
     name: string;
-    sizes: PaperBasedSizeOption[];
+    sizes: PaperBasedSizeOption;
   };
   ZIPLOC: {
     name: string;
-    sizes: PaperBasedSizeOption[];
+    sizes: PaperBasedSizeOption;
   };
   CARTONBOX: {
     name: string;
@@ -315,7 +313,7 @@ export type PackageTypes = {
   };
   PLASTICBAG: {
     name: string;
-    sizes: PaperBasedSizeOption[];
+    sizes: PaperBasedSizeOption;
   };
   PIZZABOX: {
     name: string;
@@ -324,20 +322,36 @@ export type PackageTypes = {
   };
 };
 
-export type MetricBasedSizeOption = {
-  name: string;
+export type MetricSize = {
   image: string;
-  value: typeof METRICS;
+  name: string;
+  value: {
+    [key in keyof typeof METRICS]: {
+      h: number;
+      w: number;
+      name: key;
+    };
+  };
 };
 
+export type MetricBasedSizeOption = MetricSize[];
+
 export type PaperBasedSizeOption = {
-  name: string;
-  image: string;
-  value: typeof PAPER_SIZE_FORMATS;
+  [key in (typeof AvailablePlasticBagANDPictureFrameSizes)[number]]: {
+    name: key;
+    image: string;
+    value: {
+      [key in keyof typeof METRICS]: {
+        name: key;
+        w: number;
+        h: number;
+      };
+    };
+  };
 };
 
 export type DesignPrice = {
-  designForMe: number;
+  designForMePrice: number;
   iHaveMyDesign: number;
 };
 
@@ -352,3 +366,7 @@ export type PricingOption = {
   minQty: number;
   maxQty: number;
 };
+
+export type DesignOptions = [
+  
+]

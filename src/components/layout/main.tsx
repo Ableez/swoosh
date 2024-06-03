@@ -1,18 +1,18 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import BottomBar from "../global/bottom-bar";
+import { initIDB } from "@/lib/utils/idbInit";
 
 type Props = {
   children: ReactNode;
 };
 
 const MainLayout = ({ children }: Props) => {
-  // useEffect(() => {
-  //   if ("serviceWorker" in navigator) {
-  //     void navigator.serviceWorker.register("/sw.js");
-  //   }
-  // }, []);
+  useEffect(() => {
+    initIDB();
+  });
+
   return (
     <div className="mx-auto max-w-screen-md">
       {children}

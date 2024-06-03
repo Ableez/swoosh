@@ -8,28 +8,22 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import {
-  type ProductAvgRatingType,
-  type ProductRateType,
-  products,
-  type Sticker,
-  stickerSchema,
-} from "@/lib/data/productsSchema";
-import { Heart, MessageCircleIcon, StarIcon, ThumbsDown } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { ProductInfoTittle } from "./_components/product-info-title";
 import StickerProductInfo from "./_components/sticker-info";
+import { demoData } from "@/lib/data/data";
+import { type StickerAttributes } from "@/lib/types/products";
 
 type Props = { params: { product: string } };
 
 const Product = ({ params }: Props) => {
-  const product = products.find(
+  const product = demoData.find(
     (product) => product.productInfo.id === params.product,
   );
 
   if (!product) {
-    return "404: Product not found"
+    return "404: Product not found";
   }
 
   return (
@@ -37,25 +31,11 @@ const Product = ({ params }: Props) => {
       <PrintsNavbar param={params.product} />
       <div>
         <ProductImagesCarousel images={product?.productInfo.images} />
-        <ProductInfoTittle
-          productName={product.productInfo.name}
-          quantityOptions={product.quantityOptions}
-        />
+        <ProductInfoTittle product={product} />
 
-        {params.product === "sticker" && (
+        {params.product === "sticker001" && (
           <StickerProductInfo
-            designOptions={[
-              {
-                value: "SAV",
-                image: "/productImages/stickercover1.jpg",
-              },
-              {
-                value: "Clear stiicker",
-                image: "/productImages/clearsticker.webp",
-              },
-            ]}
-            sizeOptions={product.sizeOptions}
-            stickerTypes={product.stickerTypes}
+            stickerAttribute={product.attribute as StickerAttributes}
           />
         )}
 
@@ -90,10 +70,10 @@ const Product = ({ params }: Props) => {
         </div>
 
         {/* reviews here */}
-        <ProductReviews
+        {/* <ProductReviews
           allRatings={product?.productInfo.allRatings}
           avgRatings={product?.productInfo.avgRatings}
-        />
+        /> */}
       </div>
     </div>
   );
@@ -155,81 +135,81 @@ const ProductDesc = ({ description }: ProductDescProps) => {
   );
 };
 
-type ProductReviewsProps = {
-  allRatings?: ProductRateType[];
-  avgRatings?: ProductAvgRatingType;
-};
-const ProductReviews = ({ allRatings, avgRatings }: ProductReviewsProps) => {
-  return (
-    <div className="my-6 grid gap-2">
-      <div className="flex place-items-center justify-between px-4">
-        <h4 className="flex place-items-center align-middle text-base font-semibold">
-          Reviews
-          <span className="ml-2 flex place-items-center gap-0.5 align-middle text-base text-neutral-500">
-            {avgRatings?.ratingCounts}
-          </span>
-        </h4>
-        <div className="flex place-items-center gap-2 align-middle text-xs font-medium text-neutral-700/80">
-          <div className="flex place-items-center gap-0.5 align-middle">
-            <MessageCircleIcon width={12} />
-            <h4>{avgRatings?.commentsCounts}</h4>
-          </div>
-          <div className="flex place-items-center gap-0.5 align-middle">
-            <Heart width={12} />
-            <h4>{avgRatings?.likesCounts}</h4>
-          </div>
-          <div className="flex place-items-center gap-0.5 align-middle">
-            <ThumbsDown width={12} />
-            <h4>{avgRatings?.dislikesCounts}</h4>
-          </div>
-        </div>
-      </div>
+// type ProductReviewsProps = {
+//   allRatings?: ProductRateType[];
+//   avgRatings?: ProductAvgRatingType;
+// };
+// const ProductReviews = ({ allRatings, avgRatings }: ProductReviewsProps) => {
+//   return (
+//     <div className="my-6 grid gap-2">
+//       <div className="flex place-items-center justify-between px-4">
+//         <h4 className="flex place-items-center align-middle text-base font-semibold">
+//           Reviews
+//           <span className="ml-2 flex place-items-center gap-0.5 align-middle text-base text-neutral-500">
+//             {avgRatings?.ratingCounts}
+//           </span>
+//         </h4>
+//         <div className="flex place-items-center gap-2 align-middle text-xs font-medium text-neutral-700/80">
+//           <div className="flex place-items-center gap-0.5 align-middle">
+//             <MessageCircleIcon width={12} />
+//             <h4>{avgRatings?.commentsCounts}</h4>
+//           </div>
+//           <div className="flex place-items-center gap-0.5 align-middle">
+//             <Heart width={12} />
+//             <h4>{avgRatings?.likesCounts}</h4>
+//           </div>
+//           <div className="flex place-items-center gap-0.5 align-middle">
+//             <ThumbsDown width={12} />
+//             <h4>{avgRatings?.dislikesCounts}</h4>
+//           </div>
+//         </div>
+//       </div>
 
-      {!allRatings ? (
-        "No reviews yet"
-      ) : (
-        <Carousel className="w-screen">
-          <CarouselContent className="gap-4 px-4">
-            {[
-              ...allRatings,
-              ...allRatings,
-              ...allRatings,
-              ...allRatings,
-              ...allRatings,
-              ...allRatings,
-              ...allRatings,
-            ].map((comment, idx) => {
-              return (
-                <CarouselItem
-                  key={idx}
-                  className="ml-4 basis-[70%] rounded-2xl border border-neutral-200 bg-neutral-200/50 p-6"
-                >
-                  <div className="mb-2 text-sm font-medium text-neutral-700">
-                    {comment.comment}
-                  </div>
-                  <div className="flex place-items-center gap-0.5 align-middle">
-                    <StarIcon fill="#000" width={10} />
-                    <StarIcon fill="#000" width={10} />
-                    <StarIcon fill="#000" width={10} />
-                    <StarIcon fill="#ccc" stroke="#ccc" width={10} />
-                    <StarIcon fill="#ccc" stroke="#ccc" width={10} />
-                  </div>
-                  <div className="flex place-items-center gap-2 align-middle text-sm font-normal text-neutral-400">
-                    <h4>{comment.username}</h4>
-                    <span>•</span>
-                    <h4>{comment.timestamp}</h4>
-                  </div>
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
-        </Carousel>
-      )}
-      <div className="my-4">
-        <Button variant={"secondary"} className="w-full">
-          View all
-        </Button>
-      </div>
-    </div>
-  );
-};
+//       {!allRatings ? (
+//         "No reviews yet"
+//       ) : (
+//         <Carousel className="w-screen">
+//           <CarouselContent className="gap-4 px-4">
+//             {[
+//               ...allRatings,
+//               ...allRatings,
+//               ...allRatings,
+//               ...allRatings,
+//               ...allRatings,
+//               ...allRatings,
+//               ...allRatings,
+//             ].map((comment, idx) => {
+//               return (
+//                 <CarouselItem
+//                   key={idx}
+//                   className="ml-4 basis-[70%] rounded-2xl border border-neutral-200 bg-neutral-200/50 p-6"
+//                 >
+//                   <div className="mb-2 text-sm font-medium text-neutral-700">
+//                     {comment.comment}
+//                   </div>
+//                   <div className="flex place-items-center gap-0.5 align-middle">
+//                     <StarIcon fill="#000" width={10} />
+//                     <StarIcon fill="#000" width={10} />
+//                     <StarIcon fill="#000" width={10} />
+//                     <StarIcon fill="#ccc" stroke="#ccc" width={10} />
+//                     <StarIcon fill="#ccc" stroke="#ccc" width={10} />
+//                   </div>
+//                   <div className="flex place-items-center gap-2 align-middle text-sm font-normal text-neutral-400">
+//                     <h4>{comment.username}</h4>
+//                     <span>•</span>
+//                     <h4>{comment.timestamp}</h4>
+//                   </div>
+//                 </CarouselItem>
+//               );
+//             })}
+//           </CarouselContent>
+//         </Carousel>
+//       )}
+//       <div className="my-4">
+//         <Button variant={"secondary"} className="w-full">
+//           View all
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// };

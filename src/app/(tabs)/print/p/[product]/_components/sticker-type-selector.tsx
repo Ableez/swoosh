@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown, X, CheckCircle2 } from "lucide-react";
-import { type StickerType } from "@/lib/data/productsSchema";
+import { type StickerType } from "@/lib/types/products";
 
 type StickerTypeSelectorProps = {
   stickerTypes: StickerType[];
-  currStickerType: StickerType;
+  currStickerType?: StickerType;
   setCurrStickerType: (type: StickerType) => void;
 };
 
@@ -31,7 +31,7 @@ const StickerTypeSelector = ({
       >
         <h4 className="text-sm font-medium">Sticker type</h4>
         <h4 className="flex place-items-center justify-between gap-2 align-middle text-sm font-medium">
-          <span>{currStickerType.name}</span>
+          <span>{currStickerType?.name}</span>
           <ChevronsUpDown width={16} />
         </h4>
       </Button>
@@ -53,7 +53,7 @@ const StickerTypeSelector = ({
             key={idx}
           >
             <div
-              className={`flex w-full place-items-center justify-between rounded-2xl p-3 align-middle ring-2 ${currStickerType.name === stickerType.name ? "bg-neutral-200/70 ring-neutral-500 hover:bg-neutral-200/70 hover:ring-neutral-500" : "bg-neutral-200/40 ring-transparent hover:ring-neutral-200"}`}
+              className={`flex w-full place-items-center justify-between rounded-2xl p-3 align-middle ring-2 ${currStickerType?.name === stickerType.name ? "bg-neutral-200/70 ring-neutral-500 hover:bg-neutral-200/70 hover:ring-neutral-500" : "bg-neutral-200/40 ring-transparent hover:ring-neutral-200"}`}
             >
               <div className="flex place-items-center justify-start gap-4 align-middle">
                 <Image
@@ -65,7 +65,7 @@ const StickerTypeSelector = ({
                 />
                 <h4 className="text-sm font-medium">{stickerType.name}</h4>
               </div>
-              {currStickerType.name === stickerType.name && (
+              {currStickerType?.name === stickerType.name && (
                 <div className="justify-self-end">
                   <CheckCircle2 width={20} />
                 </div>

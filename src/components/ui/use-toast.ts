@@ -142,7 +142,7 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
-function toast({ ...props }: Toast) {
+function toast(header: string, p0: { duration: number; style?: React.CSSProperties | undefined; className?: string | undefined; action?: React.ReactNode | Action; description?: React.ReactNode; icon?: React.ReactNode; invert?: boolean | undefined; closeButton?: boolean | undefined; dismissible?: boolean | undefined; important?: boolean | undefined; cancel?: React.ReactNode | Action; onDismiss?: ((toast: ToastT) => void) | undefined; onAutoClose?: ((toast: ToastT) => void) | undefined; cancelButtonStyle?: React.CSSProperties | undefined; actionButtonStyle?: React.CSSProperties | undefined; unstyled?: boolean | undefined; classNames?: ToastClassnames | undefined; descriptionClassName?: string | undefined; position?: ("top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center") | undefined; id?: string | number | undefined }, { ...props }: Toast) {
   const id = genId()
 
   const update = (props: ToasterToast) =>
